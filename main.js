@@ -27,7 +27,7 @@ var util            = require('./lib/utils').utilities;
 
 var USAGE           = "Error missing args. \n" +
     "\n" +
-    "cordova-paramedic --platform PLATFORM --plugin PATH [--justbuild --timeout MSECS --startport PORTNUM --endport PORTNUM --browserify --version ...]\n" +
+    "cordova-paramedic --platform PLATFORM --plugin PATH [--justbuild --timeout MSECS --startport PORTNUM --endport PORTNUM --version ...]\n" +
     "\n" +
     "--platform PLATFORM : the platform id. Currently supports 'ios', 'browser', 'windows', 'android'.\n" +
                     "\tPath to platform can be specified as link to git repo like:\n" +
@@ -40,7 +40,6 @@ var USAGE           = "Error missing args. \n" +
                     "\tbe installed and tested together.\n" +
     "\n" +
     "--args: (optional) add command line args to the \"cordova build\" and \"cordov run\" commands \n" +
-    "--browserify : (optional) plugins are browserified into cordova.js \n" +
     "--buildName : (optional) Build name to show in Saucelabs dashboard\n" +
     "--ci : (optional) Skip tests that require user interaction\n" +
     "--cleanUpAfterRun : (optional) cleans up the application after the run\n" +
@@ -172,10 +171,6 @@ if (argv.version) {
 
     if (argv.fileTransferServer) {
         paramedicConfig.setFileTransferServer(argv.fileTransferServer);
-    }
-
-    if (argv.browserify) {
-        paramedicConfig.setBrowserify(true);
     }
 
     if (argv.cli) {
