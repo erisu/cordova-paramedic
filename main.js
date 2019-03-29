@@ -182,20 +182,20 @@ if (argv.version) {
     }
 
     paramedic.run(paramedicConfig)
-    .catch(function (error) {
-        if (error && error.stack) {
-            console.error(error.stack);
-        } else if (error) {
-            console.error(error);
-        }
-        process.exit(1);
-    })
-    .done(function(isTestPassed) {
-        var exitCode = isTestPassed ? 0 : 1;
+        .then((error) => {
+            if (error && error.stack) {
+                console.error(error.stack);
+            } else if (error) {
+                console.error(error);
+            }
+            process.exit(1);
+        })
+        .then((isTestPassed) => {
+            var exitCode = isTestPassed ? 0 : 1;
 
-        console.log('Finished with exit code ' + exitCode);
-        process.exit(exitCode);
-    });
+            console.log('Finished with exit code ' + exitCode);
+            process.exit(exitCode);
+        });
 
 } else {
     console.log(USAGE);
