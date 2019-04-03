@@ -44,7 +44,7 @@
     "expect-telnet": "^0.5.2",
     "jasmine": "2.4.1",
     "jasmine-reporters": "^2.1.1",
-    "jasmine-spec-reporter": "^2.4.0",
+    "jasmine-spec-reporter": "^4.2.1",
     "localtunnel": "^1.9.1",
     "minimist": "^1.2.0",
     "q": "^1.4.1",
