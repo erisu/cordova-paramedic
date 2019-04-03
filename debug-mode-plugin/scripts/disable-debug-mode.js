@@ -18,15 +18,15 @@
 */
 
 module.exports = function (context) {
-    var path = require('path');
-    var shell = require('shelljs');
+    const path = require('path');
+    const shell = require('shelljs');
 
-    var libPath        = path.resolve(context.opts.projectRoot, "platforms/windows/cordova/lib");
-    var appUtilsPath   = path.join(libPath, "WindowsStoreAppUtils.ps1");
-    var appUtilsBackupPath   = path.join(libPath, "WindowsStoreAppUtils.ps1.bak");
-    var destScriptPath = path.join(libPath, "EnableDebuggingForPackage.ps1");
+    const libPath = path.resolve(context.opts.projectRoot, 'platforms/windows/cordova/lib');
+    const appUtilsPath = path.join(libPath, 'WindowsStoreAppUtils.ps1');
+    const appUtilsBackupPath = path.join(libPath, 'WindowsStoreAppUtils.ps1.bak');
+    const destScriptPath = path.join(libPath, 'EnableDebuggingForPackage.ps1');
 
     // Remove the patch and copu over backup StoreAppUtils script
-    shell.rm("-f", destScriptPath);
-    shell.cp("-f", appUtilsBackupPath, appUtilsPath);
+    shell.rm('-f', destScriptPath);
+    shell.cp('-f', appUtilsBackupPath, appUtilsPath);
 };
