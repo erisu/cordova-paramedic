@@ -18,29 +18,29 @@
 */
 
 module.exports = function (context) {
-    var path = require('path');
-    var shell = require('shelljs');
+    const path = require('path');
+    const shell = require('shelljs');
 
-    var libPath        = path.resolve(context.opts.projectRoot, "platforms/windows/cordova/lib");
-    var appUtilsPath   = path.join(libPath, "WindowsStoreAppUtils.ps1");
-    var appUtilsBackupPath   = path.join(libPath, "WindowsStoreAppUtils.ps1.bak");
-    var srcScriptPath  = path.join(__dirname, "EnableDebuggingForPackage.ps1");
-    var destScriptPath = path.join(libPath, "EnableDebuggingForPackage.ps1");
+    const libPath = path.resolve(context.opts.projectRoot, 'platforms/windows/cordova/lib');
+    const appUtilsPath = path.join(libPath, 'WindowsStoreAppUtils.ps1');
+    const appUtilsBackupPath = path.join(libPath, 'WindowsStoreAppUtils.ps1.bak');
+    const srcScriptPath = path.join(__dirname, 'EnableDebuggingForPackage.ps1');
+    const destScriptPath = path.join(libPath, 'EnableDebuggingForPackage.ps1');
 
     // copy over the patch
-    shell.cp("-f", srcScriptPath, libPath);
-    shell.cp("-f", appUtilsPath, appUtilsBackupPath);
+    shell.cp('-f', srcScriptPath, libPath);
+    shell.cp('-f', appUtilsPath, appUtilsBackupPath);
 
     // add extra code to patch
     shell.sed(
-        "-i",
+        '-i',
         /^\s*\$appActivator .*$/gim,
-        "$&\n\n" +
-        "    # START ENABLE DEBUG MODE SECTION\n" +
-        "    powershell " + destScriptPath + " $$ID\n" +
-        "    $Ole32 = Add-Type -MemberDefinition '[DllImport(\"Ole32.dll\")]public static extern int CoAllowSetForegroundWindow(IntPtr pUnk, IntPtr lpvReserved);' -Name 'Ole32' -Namespace 'Win32' -PassThru\n" +
-        "    $Ole32::CoAllowSetForegroundWindow([System.Runtime.InteropServices.Marshal]::GetIUnknownForObject($appActivator), [System.IntPtr]::Zero)\n" +
-        "    # END ENABLE DEBUG MODE SECTION\n",
+        '$&\n\n' +
+        '    # START ENABLE DEBUG MODE SECTION\n' +
+        '    powershell ' + destScriptPath + ' $$ID\n' +
+        '    $Ole32 = Add-Type -MemberDefinition "[DllImport(\'Ole32.dll\')]public static extern int CoAllowSetForegroundWindow(IntPtr pUnk, IntPtr lpvReserved);" -Name "Ole32" -Namespace "Win32" -PassThru\n' +
+        '    $Ole32::CoAllowSetForegroundWindow([System.Runtime.InteropServices.Marshal]::GetIUnknownForObject($appActivator), [System.IntPtr]::Zero)\n' +
+        '    # END ENABLE DEBUG MODE SECTION\n',
         appUtilsPath
     );
 };
