@@ -39,23 +39,9 @@ matrix:
   include:
     # one local test, without saucelabs
     - env: PLATFORM=local
-      os: osx
-      osx_image: xcode9.3
-    - env: PLATFORM=local
-      os: osx
-      osx_image: xcode9.4
-    - env: PLATFORM=local
-      os: osx
-      osx_image: xcode10
-    - env: PLATFORM=local
-      os: osx
-      osx_image: xcode10.1
-    - env: PLATFORM=local
-      os: osx
-      osx_image: xcode10.2
+      <<: *_ios
 
     # many tests with saucelabs
-
     - env: PLATFORM=browser-chrome
     - env: PLATFORM=browser-firefox
     - env: PLATFORM=browser-safari
