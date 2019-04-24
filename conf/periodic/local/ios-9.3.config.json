@@ -2,6 +2,6 @@
     "platform": "ios@https://github.com/apache/cordova-ios.git",
     "action": "run",
     "cleanUpAfterRun": true,
-    "target": "iPhone-SE\\,\\ 9\\.3",
+    "target": "iPhone-SE, 9.3",
     "verbose": true
 }
