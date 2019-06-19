@@ -4,7 +4,7 @@
     "cleanUpAfterRun": true,
     "shouldUseSauce": true,
     "saucePlatformVersion": "12.2",
-    "sauceAppiumVersion": "1.12.1",
+    "sauceAppiumVersion": "1.13.0",
     "sauceDeviceName": "iPhone XR Simulator",
     "verbose": true
 }
