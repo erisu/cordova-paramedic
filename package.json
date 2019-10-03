@@ -30,7 +30,9 @@
     "test-saucelabs-on-windows": "npm run test-saucelabs-browser && npm run test-saucelabs-android",
     "test-saucelabs-browser": "node main.js --config ./pr/browser-chrome --plugin ./spec/testable-plugin/ --shouldUseSauce",
     "test-saucelabs-ios": "node main.js --config ./pr/ios-10.0 --plugin ./spec/testable-plugin/ --shouldUseSauce",
-    "test-saucelabs-android": "node main.js --config ./pr/android-7.0 --plugin ./spec/testable-plugin/ --shouldUseSauce"
+    "test-saucelabs-android": "node main.js --config ./pr/android-7.0 --plugin ./spec/testable-plugin/ --shouldUseSauce",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "cordova",
@@ -58,7 +60,8 @@
     "tmp": "^0.1.0",
     "tree-kill": "^1.2.1",
     "unorm": "^1.4.1",
-    "wd": "^1.11.1"
+    "wd": "^1.11.1",
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -68,5 +71,6 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0"
-  }
+  },
+  "snyk": true
 }
