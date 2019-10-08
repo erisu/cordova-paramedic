@@ -51,7 +51,7 @@
     "q": "^1.5.1",
     "randomstring": "^1.1.5",
     "sauce-connect-launcher": "^1.2.5",
-    "saucelabs": "^1.2.0",
+    "saucelabs": "^2.0.0",
     "shelljs": "^0.8.3",
     "socket.io": "^2.2.0",
     "tcp-port-used": "^1.0.1",
