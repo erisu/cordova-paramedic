@@ -1,5 +1,5 @@
 {
-    "platform": "android",
+    "platform": "android@latest",
     "action": "run",
     "cleanUpAfterRun": true,
     "target": "api22",

@@ -24,7 +24,7 @@ module.exports = {
     "plugins": [
         "https://github.com/apache/cordova-plugin-inappbrowser"
     ],
-     "platform": "windows",
+     "platform": "windows@latest",
      "action": "run",
      "args": "--archs=x64 -- --appx=uap"
 };

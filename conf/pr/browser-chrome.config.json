@@ -1,5 +1,5 @@
 {
-    "platform": "browser",
+    "platform": "browser@latest",
     "action": "run",
     "cleanUpAfterRun": true,
     "shouldUseSauce": true,

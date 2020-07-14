@@ -1,5 +1,5 @@
 {
-    "platform": "ios@4.5.5",
+    "platform": "ios@latest",
     "args": "--buildFlag='-UseModernBuildSystem=0'",
     "action": "run",
     "cleanUpAfterRun": true,

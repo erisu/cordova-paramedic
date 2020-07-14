@@ -1,5 +1,5 @@
 {
-    "platform": "ios",
+    "platform": "ios@latest",
     "action": "run",
     "cleanUpAfterRun": true,
     "shouldUseSauce": true,
