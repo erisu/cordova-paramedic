@@ -27,6 +27,7 @@
     <license>Apache 2.0</license>
 
     <js-module src="socket.io.js" name="socket.io" />
+    <!-- <js-module src="socket.io.js.map" name="socket.io.map" /> -->
 
     <js-module src="JasmineParamedicProxy.js" name="JasmineParamedicProxy" />
 

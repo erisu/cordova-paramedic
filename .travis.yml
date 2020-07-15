@@ -78,12 +78,19 @@ matrix:
 before_install:
   # manually install Node for `language: android`
   - if [[ "$PLATFORM" =~ android ]]; then nvm install $TRAVIS_NODE_VERSION; fi
-  - node --version
-  - if [[ "$PLATFORM" =~ android ]]; then gradle --version; fi
-  - if [[ "$PLATFORM" =~ ios ]]; then npm install -g ios-deploy; fi
+
+  # install cordova
   - npm install -g cordova
+
+  # install ios-deloy when platform is ios
+  - if [[ "$PLATFORM" =~ ios ]]; then npm install -g ios-deploy; fi
+
   # install paramedic if not running on paramedic repo
   - if ! [[ "$TRAVIS_REPO_SLUG" =~ cordova-paramedic ]]; then npm install -g github:apache/cordova-paramedic; fi
+
+  # printout version information
+  - node --version
+  - if [[ "$PLATFORM" =~ android ]]; then gradle --version; fi
 
 install:
   - npm install
