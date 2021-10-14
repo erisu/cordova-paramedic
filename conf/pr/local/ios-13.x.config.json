@@ -3,5 +3,6 @@
     "action": "run",
     "cleanUpAfterRun": true,
     "target": "iPhone-11, 13.7",
-    "verbose": true
+    "verbose": true,
+    "deviceListBin": "instruments"
 }
