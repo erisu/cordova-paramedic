@@ -61,6 +61,10 @@ jobs:
             ios-version: 14.x
             xcode-version: 12.x
 
+          - os-version: macos-11
+            ios-version: 15.x
+            xcode-version: 13.x
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
