@@ -115,4 +115,4 @@ jobs:
         if: always()
         with:
           name: appium-logs
-          path: /tmp/appium.log
+          path: ./appium.log
