@@ -62,7 +62,7 @@ jobs:
           #   xcode-version: 12.x
 
           - os-version: macos-11
-            ios-version: 14.x
+            ios-version: 15.x
             xcode-version: 13.x
 
     steps:
@@ -110,3 +110,8 @@ jobs:
           test_plugin_path: ${{ endswith(env.repo, '/cordova-paramedic') && './spec/testable-plugin/' || './' }}
           paramedic: ${{ endswith(env.repo, '/cordova-paramedic') && 'node main.js' || 'cordova-paramedic' }}
         run: ${{ env.paramedic }} --config ./pr/local/${{ env.test_config }} --plugin ${{ env.test_plugin_path }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: appium-logs
+          path: /tmp/appium.log

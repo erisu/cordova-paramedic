@@ -3,5 +3,6 @@
     "action": "run",
     "cleanUpAfterRun": true,
     "target": "iPhone-13, 15.0",
-    "verbose": true
+    "verbose": true,
+    "logFile": "/tmp/appium.log"
 }
