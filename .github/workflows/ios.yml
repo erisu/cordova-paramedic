@@ -115,4 +115,4 @@ jobs:
         if: always()
         with:
           name: appium-logs
-          path: ./appium.log
+          path: /Users/runner/work/cordova-paramedic/cordova-paramedic/appium.log
