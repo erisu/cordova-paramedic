@@ -112,6 +112,7 @@ jobs:
         run: ${{ env.paramedic }} --config ./pr/local/${{ env.test_config }} --plugin ${{ env.test_plugin_path }}
 
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: appium-logs
           path: /tmp/appium.log
