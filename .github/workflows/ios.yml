@@ -49,20 +49,20 @@ jobs:
     strategy:
       matrix:
         versions:
-          - os-version: macos-10.15
-            ios-version: 12.x
-            xcode-version: 11.x
+          # - os-version: macos-10.15
+          #   ios-version: 12.x
+          #   xcode-version: 11.x
 
-          - os-version: macos-10.15
-            ios-version: 13.x
-            xcode-version: 11.x
+          # - os-version: macos-10.15
+          #   ios-version: 13.x
+          #   xcode-version: 11.x
 
-          - os-version: macos-10.15
-            ios-version: 14.x
-            xcode-version: 12.x
+          # - os-version: macos-10.15
+          #   ios-version: 14.x
+          #   xcode-version: 12.x
 
           - os-version: macos-11
-            ios-version: 15.x
+            ios-version: 14.x
             xcode-version: 13.x
 
     steps:
@@ -92,6 +92,12 @@ jobs:
         run: |
           sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
           sudo ln -s /Applications/Xcode_10.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 12.4.simruntime
+
+      - name: Run setup Xcode 13.x w/ iOS 14.x support
+        if: ${{ matrix.versions.xcode-version == '13.x' }}
+        run: |
+          sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+          sudo ln -s /Applications/Xcode_12.5.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 14.4.simruntime
 
       - name: Run paramedic install
         if: ${{ endswith(env.repo, '/cordova-paramedic')　!= true }}
