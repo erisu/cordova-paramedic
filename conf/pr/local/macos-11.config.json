@@ -1,0 +1,7 @@
+{
+  "platform": "ios@https://github.com/apache/cordova-ios.git#xcode-copy",
+  "action": "run",
+  "cleanUpAfterRun": true,
+  "target": "macos",
+  "verbose": true
+}
