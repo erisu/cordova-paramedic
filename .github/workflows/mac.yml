@@ -70,10 +70,9 @@ jobs:
           npm --version
           xcodebuild -version
 
-      # ios-deploy@latest
       - name: Run npm install
         run: |
-          npm i -g cordova@latest
+          npm i -g cordova@latest ios-deploy@latest
           npm ci
 
       - name: Run paramedic install
