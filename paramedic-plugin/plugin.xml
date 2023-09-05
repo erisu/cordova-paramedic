@@ -34,13 +34,21 @@
         <runs/>
     </js-module>
 
+    <config-file target="config.xml" parent="/*">
+      <access origin="http://127.0.0.1:*/*" />
+      <access origin="http://10.0.2.2:*/*" />
+
+      <allow-navigation href="http://127.0.0.1:*/*" />
+      <allow-navigation href="http://10.0.2.2:*/*" />
+
+      <allow-intent href="http://127.0.0.1:*/*" />
+      <allow-intent href="http://10.0.2.2:*/*" />
+  </config-file>
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <preference name="scheme" value="app" />
             <preference name="hostname" value="localhost" />
-            <access origin="http://127.0.0.1:*/*" />
-            <allow-navigation href="http://127.0.0.1:*/*" />
-            <allow-intent href="http://127.0.0.1:*/*" />
         </config-file>
     </platform>
 
