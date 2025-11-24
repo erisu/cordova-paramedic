@@ -44,7 +44,7 @@ jobs:
       # Storing a copy of the repo
       repo: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
 
-      node-version: 20
+      node-version: 24
 
       # These are the default Java configurations used by most tests.
       # To customize these options, add "java-distro" or "java-version" to the strategy matrix with its overriding value.
@@ -97,11 +97,11 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.node-version }}
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         env:
           java-version: ${{ matrix.versions.java-version == '' && env.default_java-version || matrix.versions.java-version }}
           java-distro: ${{ matrix.versions.java-distro == '' && env.default_java-distro || matrix.versions.java-distro }}
