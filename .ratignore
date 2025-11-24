@@ -18,3 +18,5 @@
 .git/
 coverage/
 node_modules/
+lib/appium/helpers/lib/q.min.js
+paramedic-plugin/socket.io.min.js
