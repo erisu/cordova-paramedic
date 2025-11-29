@@ -94,6 +94,12 @@ jobs:
           - android: 14
             android-api: 34
 
+          - android: 15
+            android-api: 35
+
+          - android: 16
+            android-api: 36
+
     timeout-minutes: 60
 
     steps:
