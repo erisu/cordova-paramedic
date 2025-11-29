@@ -138,24 +138,6 @@ jobs:
         if: ${{ endswith(env.repo, '/cordova-paramedic') != true }}
         run: npm i -g github:apache/cordova-paramedic
 
-      - uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b
-        env:
-          system-image-arch: ${{ matrix.versions.system-image-arch == '' && env.default_system-image-arch || matrix.versions.system-image-arch }}
-          system-image-target: ${{ matrix.versions.system-image-target == '' && env.default_system-image-target || matrix.versions.system-image-target }}
-        with:
-          api-level: ${{ matrix.versions.android-api }}
-          target: ${{ env.system-image-target }}
-          arch: ${{ env.system-image-arch }}
-          force-avd-creation: true
-          disable-animations: true
-          emulator-options: >
-            -no-window
-            -gpu swiftshader_indirect
-            -noaudio
-            -no-boot-anim
-            -no-snapshot-save
-          script: echo "Pregenerate the AVD before running Paramedic"
-
       - name: Run paramedic tests
         uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b
         env:
@@ -177,4 +159,5 @@ jobs:
             -noaudio
             -no-boot-anim
             -no-snapshot-save
+          ram-size: 4096M
           script: ${{ env.paramedic }} --config ./pr/local/${{ env.test_config }} --plugin ${{ env.test_plugin_path }}
