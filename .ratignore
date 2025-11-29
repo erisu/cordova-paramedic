@@ -15,4 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+.git/
+coverage/
+node_modules/
 lib/appium/helpers/lib/q.min.js
+paramedic-plugin/socket.io.min.js
