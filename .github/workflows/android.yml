@@ -146,9 +146,14 @@ jobs:
           api-level: ${{ matrix.versions.android-api }}
           target: ${{ env.system-image-target }}
           arch: ${{ env.system-image-arch }}
-          force-avd-creation: false
-          disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          force-avd-creation: true
+          disable-animations: true
+          emulator-options: >
+            -no-window
+            -gpu swiftshader_indirect
+            -noaudio
+            -no-boot-anim
+            -no-snapshot-save
           script: echo "Pregenerate the AVD before running Paramedic"
 
       - name: Run paramedic tests
@@ -164,7 +169,12 @@ jobs:
           api-level: ${{ matrix.versions.android-api }}
           target: ${{ env.system-image-target }}
           arch: ${{ env.system-image-arch }}
-          force-avd-creation: false
-          disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          force-avd-creation: true
+          disable-animations: true
+          emulator-options: >
+            -no-window
+            -gpu swiftshader_indirect
+            -noaudio
+            -no-boot-anim
+            -no-snapshot-save
           script: ${{ env.paramedic }} --config ./pr/local/${{ env.test_config }} --plugin ${{ env.test_plugin_path }}
