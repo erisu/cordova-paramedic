@@ -29,7 +29,7 @@
 
 `cordova-paramedic` is a tool to automate execution of Cordova plugins tests (via [`cordova-plugin-test-framework`](https://github.com/apache/cordova-plugin-test-framework)).
 
-You can use Paramedic to build and run a Cordova app with plugin tests, run these tests on local and remote emulators on [Sauce Labs](https://saucelabs.com/), and report the results. It can be used on a local or Continuous Integration environment.
+You can use Paramedic to build and run a Cordova app with plugin tests, run these tests on local emulators, and report the results. It can be used on a local or Continuous Integration environment.
 
 Cordova Paramedic is currently used to automatically run all plugin tests on CI.
 
@@ -37,21 +37,37 @@ Cordova Paramedic is currently used to automatically run all plugin tests on CI.
 
 ## Table of Contents
 
-- [Supported Cordova Platforms](#supported-cordova-platforms)
-- [What does it do?](#what-does-it-do)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Common usages](#common-usages)
-- [Command Line Interface](#command-line-interface)
-  - [What to build and test](#what-to-build-and-test)
-  - [Emulator/Device to use for tests](#emulatordevice-to-use-for-tests)
-  - [Test Result Server](#test-result-server)
-  - [Test Configuration](#test-configuration)
-  - [Sauce Labs](#sauce-labs)
-- [Configuration file](#configuration-file)
-- [API Interface](#api-interface)
-- [Quirks](#quirks)
-  - [Windows](#windows)
+- [Cordova Paramedic (Test Automation)](#cordova-paramedic-test-automation)
+  - [Table of Contents](#table-of-contents)
+  - [Supported Cordova Platforms](#supported-cordova-platforms)
+  - [What does it do?](#what-does-it-do)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Common usages](#common-usages)
+  - [Command Line Interface](#command-line-interface)
+    - [What to build and test](#what-to-build-and-test)
+      - [`--platform` (required)](#--platform-required)
+      - [`--plugin` (required)](#--plugin-required)
+      - [`--verbose` (optional)](#--verbose-optional)
+      - [`--cli` (optional)](#--cli-optional)
+      - [`--justbuild` (optional)](#--justbuild-optional)
+    - [Emulator/Device to use for tests](#emulatordevice-to-use-for-tests)
+      - [`--target` (optional)](#--target-optional)
+    - [Test Result Server](#test-result-server)
+      - [`--useTunnel` (optional)](#--usetunnel-optional)
+      - [`--externalServerUrl` (optional)](#--externalserverurl-optional)
+      - [`--port` (optional)](#--port-optional)
+    - [Test configuration](#test-configuration)
+      - [`--timeout` (optional)](#--timeout-optional)
+      - [`--outputDir` (optional)](#--outputdir-optional)
+      - [`--cleanUpAfterRun` (optional)](#--cleanupafterrun-optional)
+      - [`--logMins` (optional)](#--logmins-optional)
+      - [`--tccDb` (optional)](#--tccdb-optional)
+      - [`--args` (optional)](#--args-optional)
+  - [Configuration file](#configuration-file)
+  - [API Interface](#api-interface)
+  - [Quirks](#quirks)
+    - [Windows](#windows)
 
 <!--<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>-->
 
@@ -97,62 +113,39 @@ A full Paramedic run will:
             1. Time out if "connection takes to long" TODO (failure) <!-- 8-479-->
             1. Receive and handle "tests are done" (success) and "device disconnected" (failure) events <!-- 8-485-->
         1. (browser) Close the running browser <!-- 6-368 -->
-        1. Run the Appium tests (with sauce = false) <!-- 7-465 -->
-        </details>
-    - <details>
-      <summary>... or on Sauce Labs</summary>
-
-        1. Build, package and upload the app to Sauce Labs or (platform = browser) open the app in a browser
-        1. (platform = browser) Connect to Sauce Connect (Proxy)
-        1. Connect to Web Driver on Sauce Labs
-        1. Navigate Web Driver to correct page (browser) or webview (apps)
-        1. Click "Auto Tests" if a plugin `*wkwebview*` is installed
-        1. Find out if the "permission buster" should be skipped (plugins splashscreen or inappbrowser, browser): `skipBuster`
-        1. Start polling in the background for events using the Web Driver (submitting `skipBuster` as well) every 2.5 seconds
-        1. Wait for the tests results
-            1. Time out if "connection takes to long" TODO (failure)  <!-- 8-479-->
-            1. Receive and handle "tests are done" (success) and "device disconnected" (failure) events<!-- 8-485-->
-        1. Log success or failure
-        1. Quit Web Driver
-        1. (platform = browser) Close the open browser <!-- 16-1056 -->
-        1. Close connection to Sauce Connect (Proxy)
-        1. Run the Appium tests on Sauce Labs (with sauce = true) <!-- 7-454 -->
+        2. Run the Appium tests <!-- 7-465 -->
         </details>
     - <details>
       <summary>Run the Appium tests <!-- 6-379 --></summary>
-
+        <!-- TODO: review and update steps -->
         1. Skip if action = build <!-- 6-384 -->
-        1. Skip is Appium should be skipped <!-- 6-388 -->
-        1. Skip if platform != android or ios <!-- 6-392 -->
-        1. !sauce: Error when no targetObj TODO <!-- 6-397 -->
-        1. Create Appium options <!-- 7-403 -->
-        1. Create AppiumRunner with options <!-- 7-426 -->
+        2. Skip is Appium should be skipped <!-- 6-388 -->
+        3. Skip if platform != android or ios <!-- 6-392 -->
+        4. Error when no targetObj TODO <!-- 6-397 -->
+        5. Create Appium options <!-- 7-403 -->
+        6. Create AppiumRunner with options <!-- 7-426 -->
             1. Prepare the submitted options <!-- AppiumRunner 151 -->
-            1. Create screenshot directory <!-- AppiumRunner 147 -->
-            1. Find the tests in plugin paths <!-- AppiumRunner 307 -->
-            1. Set globals for the tests <!-- AppiumRunner 334 -->
-        1. Skip if no Appium tests were found <!-- 7-427 -->  
-        1. Prepare App in AppiumRunner <!-- 7-433 -->
+            2. Create screenshot directory <!-- AppiumRunner 147 -->
+            3. Find the tests in plugin paths <!-- AppiumRunner 307 -->
+            4. Set globals for the tests <!-- AppiumRunner 334 -->
+        7. Skip if no Appium tests were found <!-- 7-427 -->  
+        8. Prepare App in AppiumRunner <!-- 7-433 -->
             1. Remove server address from app
             2. Reconfigure app (modify preferences + CSP, add plugin) <!-- 367, 375, 385 -- >
             3. Build app
-        1. (sauce) Package and Upload the App to Sauce Labs <!-- 7-436 -->
-        1. Run tests via AppiumRunner <!-- 7-442 -->
-            1. (!sauce) Start iOS Proxy (`ios_webkit_debug_proxy`) <!-- AppiumRunner 231 -->
-            1. (!sauce) Install (`npm install appium`) <!-- AppiumRunner 231 --> and start Appium server <!-- AppiumRunner 252 -->
-            1. Start to run the Appium tests <!-- AppiumRunner 170 -->
-            1. Handle eventual exceptions, return the result
+        9.  Run tests via AppiumRunner <!-- 7-442 -->
+            1. Install Appium Drivers <!-- AppiumRunner 231 -->
+            2. Start Appium server <!-- AppiumRunner 252 -->
+            3. Run the Appium tests <!-- AppiumRunner 170 -->
+            4. Handle eventual exceptions, return the result
       </details>
-1. <details>
+2. <details>
     <summary>Clean up</summary>
-
-    1. (!sauce) <!-- 2-107 -->
-        1. Handle timeouts of test execution above
-        1. Collect Device Logs
-        1. Uninstall App
-        1. Kill Emulator Process
-    1. (sauce) Display Sauce run details <!-- 2-118 -->
-    1. Clean up Project <!-- 2-121 -->
+     1. Handle timeouts of test execution above
+     2. Collect Device Logs
+     3. Uninstall App
+     4. Kill Emulator Process
+     5. Clean up Project <!-- 2-121 -->
     </details>
 
 ## Installation
@@ -219,12 +212,6 @@ cordova-paramedic --platform android --plugin ./
 ```shell
 
 cordova-paramedic --platform android --plugin ./ --target 02e7f7e9215da7f8 --useTunnel
-```
-
-**Test your current plugin on an Android 7.0 emulator on Sauce Labs:**
-
-```shell
-cordova-paramedic --config conf/pr/android-7.0 --plugin ./
 ```
 
 ## Command Line Interface
@@ -371,44 +358,6 @@ Add additional parameters to the `cordova build` and `cordova run` commands.
 
 ```shell
 cordova-paramedic --platform ios --plugin cordova-plugin-contacts --args=--buildFlag='-UseModernBuildSystem=0'
-```
-
-### Sauce Labs
-
-#### `--shouldUseSauce` (optional)
-
-Run tests on [Sauce Labs](https://saucelabs.com/). You'll need to specify Sauce Labs username and access key using either `--sauceUser` and `--sauceKey` arguments or `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` environment variables.
-
-#### `--sauceUser` (optional)
-
-Sauce Labs username. Alternatively set via the `SAUCE_USERNAME` environment variable.
-
-#### `--sauceKey` (optional)
-
-Sauce Labs access key. Alternatively set via the `SAUCE_ACCESS_KEY` environment variable.
-
-```shell
-cordova-paramedic --platform ios --plugin cordova-plugin-contacts --shouldUseSauce --sauceUser ***** --sauceKey ***** --buildName "paramedic-test-01"
-```
-
-#### `--buildName` (optional)
-
-Build name to show on Sauce Labs dashboard. If omitted, will use "Paramedic sauce test" and a timestamp.
-
-#### `--sauceDeviceName` (optional)
-
-Name of the Sauce Labs emulator or browser. For example, "iPhone Simulator" or "firefox". Please refer to the [Sauce Labs platforms list](https://saucelabs.com/platforms) to see available device names.
-
-#### `--saucePlatformVersion` (optional)
-
-Platform version of the Sauce Labs emulator OS, or version of the browser (if testing `browser` platform). For example, "9.3" or "54.0". Please refer to the [Sauce Labs platforms list](https://saucelabs.com/platforms) to see available platform versions.
-
-#### `--sauceAppiumVersion` (optional)
-
-Appium version to use when running on Sauce Labs. For example, "1.5.3".
-
-```shell
-cordova-paramedic --platform ios --plugin cordova-plugin-contacts --shouldUseSauce --sauceUser ***** --sauceKey ***** --sauceDeviceName 'iPad Simulator" --saucePlatformVersion 9.1 --appiumVersion 1.5.2
 ```
 
 ## Configuration file
