@@ -21,8 +21,5 @@ const { defineConfig, globalIgnores } = require('eslint/config')
 const nodeConfig = require('@cordova/eslint-config/node')
 
 module.exports = defineConfig([
-    globalIgnores([
-        'lib/appium/helpers/lib/q.min.js'
-    ]),
     ...nodeConfig
 ])
