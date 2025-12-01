@@ -28,4 +28,5 @@ Thumbs.db
 .vscode
 tmp
 
+.appium
 node_modules
