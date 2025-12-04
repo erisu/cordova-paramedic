@@ -13,20 +13,15 @@
   "repository": "github:apache/cordova-paramedic",
   "bugs": "https://github.com/apache/cordova-paramedic/issues",
   "scripts": {
-    "test": "npm run lint & npm run test-local && npm run test-saucelabs",
-    "test-on-windows": "npm run lint & npm run test-local-on-windows && npm run test-saucelabs-on-windows",
+    "test": "npm run lint & npm run test-local",
+    "test-on-windows": "npm run lint & npm run test-local-on-windows",
     "lint": "eslint lib",
     "test-local": "npm run test-browser && npm run test-android && npm run test-ios",
     "test-local-on-windows": "npm run test-browser && npm run test-android",
     "test-android": "node main.js --platform android --plugin ./spec/testable-plugin/",
     "test-ios": "node main.js --platform ios --plugin ./spec/testable-plugin/ --verbose",
     "test-windows": "node main.js --platform windows --plugin ./spec/testable-plugin/",
-    "test-browser": "node main.js --platform browser --plugin ./spec/testable-plugin/",
-    "test-saucelabs": "npm run test-saucelabs-browser && npm run test-saucelabs-ios && npm run test-saucelabs-android",
-    "test-saucelabs-on-windows": "npm run test-saucelabs-browser && npm run test-saucelabs-android",
-    "test-saucelabs-browser": "node main.js --config ./pr/browser-chrome --plugin ./spec/testable-plugin/ --shouldUseSauce",
-    "test-saucelabs-ios": "node main.js --config ./pr/ios-10.0 --plugin ./spec/testable-plugin/ --shouldUseSauce",
-    "test-saucelabs-android": "node main.js --config ./pr/android-7.0 --plugin ./spec/testable-plugin/ --shouldUseSauce"
+    "test-browser": "node main.js --platform browser --plugin ./spec/testable-plugin/"
   },
   "keywords": [
     "cordova",
@@ -47,8 +42,6 @@
     "minimist": "^1.2.5",
     "q": "^1.5.1",
     "randomstring": "^1.2.1",
-    "sauce-connect-launcher": "^1.3.2",
-    "saucelabs": "^1.2.0",
     "shelljs": "^0.8.4",
     "socket.io": "^4.6.2",
     "tcp-port-used": "^1.0.2",

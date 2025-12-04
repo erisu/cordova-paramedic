@@ -40,7 +40,6 @@ var USAGE           = "Error missing args. \n" +
                     "\tbe installed and tested together.\n" +
     "\n" +
     "--args: (optional) add command line args to the \"cordova build\" and \"cordov run\" commands \n" +
-    "--buildName : (optional) Build name to show in Saucelabs dashboard\n" +
     "--ci : (optional) Skip tests that require user interaction\n" +
     "--cleanUpAfterRun : (optional) cleans up the application after the run\n" +
     "--cli : (optional) A path to Cordova CLI\n" +
@@ -49,13 +48,6 @@ var USAGE           = "Error missing args. \n" +
     "--justbuild : (optional) just builds the project, without running the tests \n" +
     "--logMins : (optional) Windows only - specifies number of minutes to get logs\n" +
     "--outputDir : (optional) path to save Junit results file & Device logs\n" +
-    "--sauceAppiumVersion : (optional) Appium version to use when running on Saucelabs. For example, \"1.5.3\"\n" +
-    "--sauceDeviceName : (optional) Name of the SauceLabs emulator/browser. For example, \"iPhone Simulator\" or \"firefox\"\n" +
-    "--sauceKey : (optional) Saucelabs access key\n" +
-    "--saucePlatformVersion : (optional) Version of the emulator OS or version of the browser. For example, \"9.3\" or \"54.0\"\n" +
-    "--sauceTunnelId : (optional) Tunnel identifier to use. Only usable if you have Sauce Connect up\n" + 
-    "--sauceUser : (optional) Saucelabs username\n" +
-    "--shouldUseSauce : (optional) run tests on Sauce Labs\n" +
     "--skipAppiumTests : (optional) Do not run Appium tests\n" +
     "--skipMainTests : (optional) Do not run main (cordova-test-framework) tests\n" +
     "--startport/--endport `PORTNUM` : (optional) ports to find available and use for posting results from emulator back to paramedic server (default is from 8008 to 8009)\n" +
@@ -109,41 +101,6 @@ if (argv.version) {
 
     if (argv.action) {
         paramedicConfig.setAction(argv.action);
-    }
-
-    if (argv.shouldUseSauce) {
-        if (argv.shouldUseSauce === 'false') {
-            argv.shouldUseSauce = false;
-        }
-        paramedicConfig.setShouldUseSauce(argv.shouldUseSauce);
-    }
-
-    if (argv.buildName) {
-        paramedicConfig.setBuildName(argv.buildName);
-    }
-
-    if (argv.sauceUser) {
-        paramedicConfig.setSauceUser(argv.sauceUser);
-    }
-
-    if (argv.sauceKey) {
-        paramedicConfig.setSauceKey(argv.sauceKey);
-    }
-
-    if (argv.sauceDeviceName) {
-        paramedicConfig.setSauceDeviceName(argv.sauceDeviceName);
-    }
-
-    if (argv.saucePlatformVersion) {
-        paramedicConfig.setSaucePlatformVersion(argv.saucePlatformVersion);
-    }
-
-    if (argv.sauceAppiumVersion) {
-        paramedicConfig.setSauceAppiumVersion(argv.sauceAppiumVersion);
-    }
-
-    if (argv.sauceTunnelId) {
-        paramedicConfig.setSauceTunnelId(argv.sauceTunnelId);
     }
 
     if (argv.useTunnel) {
