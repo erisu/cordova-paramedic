@@ -8,7 +8,7 @@
     "cordova-paramedic": "./main.js"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=20.9.0"
   },
   "repository": "github:apache/cordova-paramedic",
   "bugs": "https://github.com/apache/cordova-paramedic/issues",
@@ -31,20 +31,20 @@
   ],
   "author": "Apache Software Foundation",
   "dependencies": {
-    "cordova-common": "^4.0.2",
+    "cordova-common": "^6.0.0",
     "execa": "^5.1.1",
-    "jasmine-reporters": "^2.5.0",
+    "jasmine-reporters": "^2.5.2",
     "jasmine-spec-reporter": "^7.0.0",
     "localtunnel": "^2.0.2",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.8",
     "q": "^1.5.1",
-    "shelljs": "^0.8.4",
-    "socket.io": "^4.6.2",
+    "shelljs": "^0.10.0",
+    "socket.io": "^4.8.1",
     "tcp-port-used": "^1.0.2",
-    "tmp": "^0.2.1",
+    "tmp": "^0.2.5",
     "tree-kill": "^1.2.2"
   },
   "devDependencies": {
-    "@cordova/eslint-config": "^3.0.0"
+    "@cordova/eslint-config": "^6.0.0"
   }
 }
