@@ -19,104 +19,37 @@
     under the License.
 */
 
-const parseArgs = require('minimist');
+const utils = require('node:util');
 
 const paramedic = require('./lib/paramedic');
 const ParamedicConfig = require('./lib/ParamedicConfig');
-const { utilities } = require('./lib/utils');
 
-const USAGE = `Error missing args.
-
-cordova-paramedic --platform PLATFORM --plugin PATH [--justbuild --timeout MSECS --version ...]
-
---platform PLATFORM : the platform id. Currently supports 'ios', 'browser' 'android'.
-    Path to platform can be specified as link to git repo like:
-    android@https://github.com/apache/cordova-android.git
-    or path to local copied git repo like:
-    android@../cordova-android/
---plugin PATH : the relative or absolute path to a plugin folder
-    expected to have a 'tests' folder.
-    You may specify multiple --plugin flags and they will all
-    be installed and tested together.
-
---args: (optional) add command line args to the "cordova build" and "cordov run" commands
---ci : (optional) Skip tests that require user interaction
---cleanUpAfterRun : (optional) cleans up the application after the run
---cli : (optional) A path to Cordova CLI
---config : (optional) read configuration from paramedic configuration file
---justbuild : (optional) just builds the project, without running the tests
---outputDir : (optional) path to save Junit results file & Device logs
---skipMainTests : (optional) Do not run main (cordova-test-framework) tests
---target : (optional) target to deploy to
---tccDb : (optional) iOS only - specifies the path for the TCC.db file to be copied.
---timeout MSECS : (optional) time in millisecs to wait for tests to pass|fail
-    (defaults to 10 minutes)
---verbose : (optional) verbose mode. Display more information output
---version : (optional) prints cordova-paramedic version and exits
-`;
-
-const argv = parseArgs(process.argv.slice(2), { string: ['plugin'] });
-const pathToParamedicConfig = utilities.getConfigPath(argv.config);
+const options = ParamedicConfig.getParseArgOpts();
+const { values: argv } = utils.parseArgs({ options });
 
 if (argv.version) {
     console.log(require('./package.json').version);
     process.exit(0);
 }
 
-if (!pathToParamedicConfig && (!argv.platform || !argv.plugin)) {
-    console.log(USAGE);
+if (argv.help) {
+    console.log(ParamedicConfig.getUsage());
+    process.exit(0);
+}
+
+/*
+ * Create the config instance and extract needed configs for the main runner.
+ */
+const config = new ParamedicConfig(argv);
+const platform = config.getPlatform();
+const plugins = config.get(ParamedicConfig.Options.PLUGINS);
+
+if ((!platform || !plugins)) {
+    console.log(ParamedicConfig.getUsage(true));
     process.exit(1);
 }
 
-const paramedicConfig = pathToParamedicConfig
-    ? ParamedicConfig.parseFromFile(pathToParamedicConfig)
-    : ParamedicConfig.parseFromArguments(argv);
-
-if (argv.justBuild || argv.justbuild) {
-    paramedicConfig.setAction('build');
-}
-
-if (argv.plugin) {
-    paramedicConfig.setPlugins(argv.plugin);
-}
-
-if (argv.outputDir) {
-    paramedicConfig.setOutputDir(argv.outputDir);
-}
-
-if (argv.tccDb) {
-    paramedicConfig.setTccDb(argv.tccDb);
-}
-
-if (argv.platform) {
-    paramedicConfig.setPlatform(argv.platform);
-}
-
-if (argv.action) {
-    paramedicConfig.setAction(argv.action);
-}
-
-if (argv.skipMainTests) {
-    paramedicConfig.setSkipMainTests(argv.skipMainTests);
-}
-
-if (argv.ci) {
-    paramedicConfig.setCI(argv.ci);
-}
-
-if (argv.target) {
-    paramedicConfig.setTarget(argv.target);
-}
-
-if (argv.cli) {
-    paramedicConfig.setCli(argv.cli);
-}
-
-if (argv.args) {
-    paramedicConfig.setArgs(argv.args);
-}
-
-paramedic.run(paramedicConfig)
+paramedic.run()
     .then((isTestPassed) => {
         const exitCode = isTestPassed ? 0 : 1;
         console.log('Finished with exit code ' + exitCode);
