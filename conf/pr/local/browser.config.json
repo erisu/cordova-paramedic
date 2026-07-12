@@ -1,5 +1,5 @@
 {
-    "platform": "browser@latest",
+    "platform": "browser@github:erisu/cordova-browser#feat/manifest-improvements",
     "action": "run",
     "cleanUpAfterRun": true,
     "verbose": true
