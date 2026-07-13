@@ -1,5 +1,6 @@
 {
-    "platform": "browser@latest",
+    "platform": "browser",
+    "platformOverride": "github:erisu/cordova-browser#feat/drop-cordova-serve",
     "action": "run",
     "cleanUpAfterRun": true,
     "verbose": true
