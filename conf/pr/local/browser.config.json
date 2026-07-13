@@ -1,6 +1,6 @@
 {
     "platform": "browser",
-    "platformOverride": "github:erisu/cordova-browser#feat/manifest-improvements",
+    "platformOverride": "github:erisu/cordova-browser#feat/drop-cordova-serve",
     "action": "run",
     "cleanUpAfterRun": true,
     "verbose": true
